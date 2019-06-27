@@ -14,18 +14,21 @@ import ch.cpnv.angrywirds.Models.Stage.Title;
  * Created by Xavier on 10.06.18.
  */
 
-public class Settings extends GameActivity implements InputProcessor {
+public class Progress extends GameActivity implements InputProcessor {
 
     private Texture background;
     private Title title;
-    private BasicButton saveButton;
-    private BasicButton cancelButton;
+    private BasicButton changeModeButton;
+    private BasicButton returnGameButton;
 
-
-    public Settings() {
+    public Progress() {
         super();
         background = new Texture(Gdx.files.internal("background.png"));
-        title = new Title("Settings", 0, 250, true);
+        title = new Title("Progress", 0, 250, true);
+
+        changeModeButton = new BasicButton("btn.png", "Change mode", Play.WORLD_WIDTH - 192, Play.FLOOR_HEIGHT, 192, 62);
+        returnGameButton = new BasicButton("btn.png", "Return to game", 0, Play.FLOOR_HEIGHT, 192, 62);
+
         Gdx.input.setInputProcessor(this);
     }
 
@@ -45,8 +48,8 @@ public class Settings extends GameActivity implements InputProcessor {
         spriteBatch.begin();
         spriteBatch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         title.draw(spriteBatch);
-//        playButton.draw(spriteBatch);
-//        settingsButton.draw(spriteBatch);
+        changeModeButton.draw(spriteBatch);
+        returnGameButton.draw(spriteBatch);
         spriteBatch.end();
     }
 
@@ -74,13 +77,13 @@ public class Settings extends GameActivity implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector3 positionTouched = camera.unproject(new Vector3(screenX, screenY, 0));
         // Check if the button is touched
-//        if (this.playButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
-//            Gdx.app.log("ANGRY", "playButton CLICKED");
+        if (this.changeModeButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
+            Gdx.app.log("ANGRY", "changeModeButton CLICKED");
 //            AngryWirds.gameActivityManager.push(new Play());
-//        } else if (this.settingsButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
-//            Gdx.app.log("ANGRY", "settings Button CLICKED");
+        } else if (this.returnGameButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
+            Gdx.app.log("ANGRY", "returnGameButton Button CLICKED");
 //            AngryWirds.gameActivityManager.push(new Play());
-//        }
+        }
         return false;
     }
 
