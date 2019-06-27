@@ -24,6 +24,14 @@ public class Vocabulary {
         this.words = new ArrayList<Word>();
     }
 
+    public ArrayList<Word> getWords() {
+        return words;
+    }
+
+    public String getVocName() {
+        return vocName;
+    }
+
     public void addWord(Word w) {
         words.add(w);
     }

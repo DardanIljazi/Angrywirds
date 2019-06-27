@@ -39,6 +39,7 @@ public abstract class VocProvider {
                 for (JsonValue langages : baselangue.iterator())
                 {
                     languages.add(new Language(langages.getInt("id"),langages.getString("lName")));
+
                 }
             }
 

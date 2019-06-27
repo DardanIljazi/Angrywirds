@@ -57,12 +57,28 @@ public class Play extends GameActivity implements InputProcessor {
 
     private BasicButton advancementButton;
 
+    private ArrayList<String> touchedWords;
+
     public Play() {
         super();
+
+        touchedWords = new ArrayList<String>();
+        touchedWords.add("Turquoise");
+        touchedWords.add("Pink");
+        touchedWords.add("jaune");
+        touchedWords.add("JAUNE");
+        touchedWords.add("Bleu clair");
 
         // Besoin de mettre ça dans le scenery object (géré en parallèle)
         babble = new ArrayList<Bubble>();
         vocabulary = VocProvider.vocabularies.get(0); // hardcoded for now
+        Gdx.app.log("ANGRY", "vocabulary: " + vocabulary.getVocName() + " " + vocabulary.getWords());
+        for(Word word : vocabulary.getWords()) {
+            Gdx.app.log("ANGRY", "word: " +  word.getValue1() + " word2: " + word.getValue2());
+
+        }
+
+
 
         background = new Texture(Gdx.files.internal("background.png"));
         slingshot1 = new Texture(Gdx.files.internal("slingshot1.png"));
@@ -150,6 +166,9 @@ public class Play extends GameActivity implements InputProcessor {
             } else if (c.equals("Pig")) {
                 Pig p = (Pig) hit;
                 if (p.getWord().getId() == board.getWordId()) { // Correct answer
+
+                    touchedWords.add(p.getWord().getValue1());
+
                     scoreBoard.scoreChange(SCORE_BUMP_SUCCESS);
                     p.setWord(vocabulary.pickAWord());
                     board.setWord(scenery.pickAWord());
@@ -230,7 +249,7 @@ public class Play extends GameActivity implements InputProcessor {
         Vector3 pointTouched = camera.unproject(new Vector3(screenX, screenY, 0)); // Convert from screen coordinates to camera coordinates
         if (this.advancementButton.getSprite().getBoundingRectangle().contains(new Vector2(pointTouched.x, pointTouched.y))) {
             Gdx.app.log("ANGRY", "advancementButton CLICKED");
-            AngryWirds.gameActivityManager.push(new Progress());
+            AngryWirds.gameActivityManager.push(new Progress(touchedWords));
             return false;
         }
         actions.add(new Touch(pointTouched, Touch.Type.down));

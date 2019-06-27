@@ -13,6 +13,8 @@ public abstract class FontProvider {
 
     public static BitmapFont Title;
     public static BitmapFont h1;
+    public static BitmapFont text;
+    public static BitmapFont TitleBlack;
 
     /**
      * Must be called once at the beginning of the app
@@ -21,12 +23,20 @@ public abstract class FontProvider {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.characters = "abcdefghijklmnopqrstuvwxyzàéèêëùABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.!'()>?:";
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Disko.ttf"));
-        parameter.size = 150;
+        parameter.size = 100;
         parameter.color = Color.BLUE;
         Title = generator.generateFont(parameter);
 
+        parameter.color = Color.BLACK;
+        TitleBlack = generator.generateFont(parameter);
+
         parameter.size = 80;
         h1 = generator.generateFont(parameter);
+
+        parameter.size = 20;
+        text = generator.generateFont(parameter);
+
+
     }
 
 }

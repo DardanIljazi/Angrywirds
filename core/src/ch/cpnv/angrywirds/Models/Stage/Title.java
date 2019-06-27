@@ -43,6 +43,10 @@ public final class Title {
         setText(message);
     }
 
+    public void setFont(BitmapFont fontBitmap) {
+        font = fontBitmap;
+    }
+
     public void draw(Batch batch)
     {
         font.draw(batch, layout, x, y);
@@ -52,4 +56,9 @@ public final class Title {
     {
         layout.setText(font,text);
     }
+
+    public void setWidth(int width) {
+        layout.width = width;
+    }
+
 }
