@@ -17,6 +17,10 @@ public class GameActivityManager {
         return gameActivities.firstElement();
     }
 
+    public Stack<GameActivity> all() {
+        return gameActivities;
+    }
+
     public void push(GameActivity gameActivity) {
         gameActivities.push(gameActivity);
     }
