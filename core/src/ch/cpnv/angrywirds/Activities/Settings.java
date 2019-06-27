@@ -6,30 +6,26 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import java.awt.Button;
-
 import ch.cpnv.angrywirds.AngryWirds;
 import ch.cpnv.angrywirds.Models.Stage.BasicButton;
-import ch.cpnv.angrywirds.Models.Stage.ScoreBoard;
 import ch.cpnv.angrywirds.Models.Stage.Title;
 
 /**
  * Created by Xavier on 10.06.18.
  */
 
-public class Menu extends GameActivity implements InputProcessor {
+public class Settings extends GameActivity implements InputProcessor {
 
     private Texture background;
     private Title title;
-    private BasicButton playButton;
-    private BasicButton settingsButton;
+    private BasicButton saveButton;
+    private BasicButton cancelButton;
 
-    public Menu() {
+
+    public Settings() {
         super();
         background = new Texture(Gdx.files.internal("background.png"));
-        title = new Title("Menu", 0, 60, true);
-        playButton = new BasicButton("btn.png", "Play", (WORLD_WIDTH - 193.f) / 2, (WORLD_HEIGHT - 62.f) / 2 - 55, 193, 62);
-        settingsButton = new BasicButton("btn.png", "Settings", (WORLD_WIDTH - 193.f) / 2, (WORLD_HEIGHT - 62.f) / 2 - 125, 193, 62);
+        title = new Title("Settings", 0, 250, true);
         Gdx.input.setInputProcessor(this);
     }
 
@@ -49,8 +45,8 @@ public class Menu extends GameActivity implements InputProcessor {
         spriteBatch.begin();
         spriteBatch.draw(background, 0, 0, camera.viewportWidth, camera.viewportHeight);
         title.draw(spriteBatch);
-        playButton.draw(spriteBatch);
-        settingsButton.draw(spriteBatch);
+//        playButton.draw(spriteBatch);
+//        settingsButton.draw(spriteBatch);
         spriteBatch.end();
     }
 
@@ -78,13 +74,13 @@ public class Menu extends GameActivity implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector3 positionTouched = camera.unproject(new Vector3(screenX, screenY, 0));
         // Check if the button is touched
-        if (this.playButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
-            Gdx.app.log("ANGRY", "playButton CLICKED");
-            AngryWirds.gameActivityManager.push(new Play());
-        } else if (this.settingsButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
-            Gdx.app.log("ANGRY", "settings Button CLICKED");
-            AngryWirds.gameActivityManager.push(new Settings());
-        }
+//        if (this.playButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
+//            Gdx.app.log("ANGRY", "playButton CLICKED");
+//            AngryWirds.gameActivityManager.push(new Play());
+//        } else if (this.settingsButton.getSprite().getBoundingRectangle().contains(new Vector2(positionTouched.x, positionTouched.y))) {
+//            Gdx.app.log("ANGRY", "settings Button CLICKED");
+//            AngryWirds.gameActivityManager.push(new Play());
+//        }
         return false;
     }
 
