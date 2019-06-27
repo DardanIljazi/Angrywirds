@@ -228,6 +228,11 @@ public class Play extends GameActivity implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         Vector3 pointTouched = camera.unproject(new Vector3(screenX, screenY, 0)); // Convert from screen coordinates to camera coordinates
+        if (this.advancementButton.getSprite().getBoundingRectangle().contains(new Vector2(pointTouched.x, pointTouched.y))) {
+            Gdx.app.log("ANGRY", "advancementButton CLICKED");
+            AngryWirds.gameActivityManager.push(new Progress());
+            return false;
+        }
         actions.add(new Touch(pointTouched, Touch.Type.down));
         return false;
     }
@@ -235,11 +240,6 @@ public class Play extends GameActivity implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector3 pointTouched = camera.unproject(new Vector3(screenX, screenY, 0)); // Convert from screen coordinates to camera coordinates
-        if (this.advancementButton.getSprite().getBoundingRectangle().contains(new Vector2(pointTouched.x, pointTouched.y))) {
-            Gdx.app.log("ANGRY", "advancementButton CLICKED");
-            AngryWirds.gameActivityManager.push(new Progress());
-            return false;
-        }
         actions.add(new Touch(pointTouched, Touch.Type.up));
 
         return false;
