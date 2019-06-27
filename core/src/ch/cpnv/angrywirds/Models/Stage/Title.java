@@ -30,6 +30,12 @@ public final class Title {
         y = py;
     }
 
+    public Title(String message, float posXShift, float posYShift, boolean shift) {
+        initBase(message);
+        x = (GameActivity.WORLD_WIDTH-layout.width)/2 + posXShift;
+        y = (GameActivity.WORLD_HEIGHT+layout.height)/2 + posYShift;
+    }
+
     private void initBase(String message)
     {
         layout = new GlyphLayout();

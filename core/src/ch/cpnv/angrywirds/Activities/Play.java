@@ -161,6 +161,7 @@ public class Play extends GameActivity implements InputProcessor {
         if (tweety.collidesWith(waspy)) {
             scoreBoard.scoreChange(-100);
             AngryWirds.gameActivityManager.push(new GameOver());
+            return;
         }
         if (tweety.getX() > WORLD_WIDTH - Bird.WIDTH) tweety.reset();
 

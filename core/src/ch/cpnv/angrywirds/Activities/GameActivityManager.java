@@ -13,6 +13,10 @@ public class GameActivityManager {
         gameActivities = new Stack<GameActivity>();
     }
 
+    public GameActivity peekFirst() {
+        return gameActivities.firstElement();
+    }
+
     public void push(GameActivity gameActivity) {
         gameActivities.push(gameActivity);
     }
