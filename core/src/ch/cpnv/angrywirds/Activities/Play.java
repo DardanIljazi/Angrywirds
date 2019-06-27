@@ -13,6 +13,7 @@ import java.util.Queue;
 import ch.cpnv.angrywirds.AngryWirds;
 import ch.cpnv.angrywirds.Models.Data.Vocabulary;
 import ch.cpnv.angrywirds.Models.Data.Word;
+import ch.cpnv.angrywirds.Models.Stage.BasicButton;
 import ch.cpnv.angrywirds.Models.Stage.Bird;
 import ch.cpnv.angrywirds.Models.Stage.Board;
 import ch.cpnv.angrywirds.Models.Stage.Bubble;
@@ -54,6 +55,8 @@ public class Play extends GameActivity implements InputProcessor {
     private Queue<Touch> actions;
     private Vocabulary vocabulary; // The vocabulary we train
 
+    private BasicButton advancementButton;
+
     public Play() {
         super();
 
@@ -65,12 +68,14 @@ public class Play extends GameActivity implements InputProcessor {
         slingshot1 = new Texture(Gdx.files.internal("slingshot1.png"));
         slingshot2 = new Texture(Gdx.files.internal("slingshot2.png"));
 
+        advancementButton = new BasicButton("btn.png", "Advancement", 0, FLOOR_HEIGHT, 192, 62);
+
         tweety = new Bird();
         tweety.freeze(); // it won't fly until we launch
         rubberBand1 = new RubberBand();
         rubberBand2 = new RubberBand();
 
-        waspy = new Wasp(new Vector2(WORLD_WIDTH / 2, WORLD_HEIGHT / 2), new Vector2(20, 20));
+        waspy = new Wasp(new Vector2(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f), new Vector2(20, 20));
         scenery = new Scenery();
         for (int i = 5; i < WORLD_WIDTH / 50; i++) {
             try {
@@ -88,7 +93,7 @@ public class Play extends GameActivity implements InputProcessor {
         }
         for (int i = 0; i < 8; i++) {
             try {
-                scenery.addElement(new Pig(new Vector2(AngryWirds.alea.nextInt(WORLD_WIDTH * 2 / 3) + WORLD_WIDTH / 3, FLOOR_HEIGHT + 50), vocabulary.pickAWord()));
+                scenery.addElement(new Pig(new Vector2(AngryWirds.alea.nextInt(WORLD_WIDTH * 2 / 3) + WORLD_WIDTH / 3f, FLOOR_HEIGHT + 50), vocabulary.pickAWord()));
             } catch (Exception e) {
                 Gdx.app.log("ANGRY", "Could not add Pig to scenery");
             }
@@ -201,6 +206,7 @@ public class Play extends GameActivity implements InputProcessor {
         waspy.draw(spriteBatch);
         scenery.draw(spriteBatch);
         spriteBatch.draw(slingshot2, SLINGSHOT_OFFSET, FLOOR_HEIGHT, SLINGSHOT_WIDTH, SLINGSHOT_HEIGHT);
+        advancementButton.draw(spriteBatch);
         spriteBatch.end();
     }
 
@@ -229,7 +235,13 @@ public class Play extends GameActivity implements InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector3 pointTouched = camera.unproject(new Vector3(screenX, screenY, 0)); // Convert from screen coordinates to camera coordinates
+        if (this.advancementButton.getSprite().getBoundingRectangle().contains(new Vector2(pointTouched.x, pointTouched.y))) {
+            Gdx.app.log("ANGRY", "advancementButton CLICKED");
+            AngryWirds.gameActivityManager.push(new Progress());
+            return false;
+        }
         actions.add(new Touch(pointTouched, Touch.Type.up));
+
         return false;
     }
 
